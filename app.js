@@ -17,11 +17,15 @@ let schema = buildSchema(`
 		desc : String
 	}
 	type Query {
+		forum(id : ID!) : Forum,
 		forums : [Forum]
 	}
 `)
 
 let resolvers = {
+	forum: (args)=> {
+		return ForumsData.find(el => el.id == args.id)
+	},
 	forums: ()=> ForumsData
 }
 app.use('/graphql', graphqlHTTP({
